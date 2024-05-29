@@ -16,11 +16,11 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    baseUrl: "https://awen.docker.so/",
+    baseUrl: "https://your-project/",
     specPattern: "cypress/e2e/*.{js,jsx,ts,tsx}",
     supportFile: "cypress/support/e2e.js",
   },
   env: {
-    baseUrl: "https://awen.docker.so/",
+    baseUrl: "https://your-project/",
   }
 });

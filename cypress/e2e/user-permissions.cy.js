@@ -32,7 +32,6 @@ describe('Test permissions to view content listing.', () => {
 })
 
 describe('Testing user rights', () => {
-
   it('Login as test user and create content', () => {
 
     // Check if user exist.
@@ -49,7 +48,6 @@ describe('Testing user rights', () => {
         }
       })
     })
-
       // Edit node type.
       .then(() => {
         cy.fixture('content.json').then(content => {
@@ -58,7 +56,6 @@ describe('Testing user rights', () => {
 
         // Get all required fields.
         cy.get('.required').each((($element, $index, $list) => {
-
           if ($element[0].type === 'text') {
             cy.fixture('content.json').then(content => {
               cy.wrap($element).type(content.test_content + ' title')
@@ -77,7 +74,6 @@ describe('Testing user rights', () => {
           }
           else if (!$element[0].type) {
             // No type typically means section for paragraph reference that requires opening an iframe modal.
-
             // Opens the iframe modal.
             cy.wrap($element)
               .within($element, () => {
@@ -114,6 +110,7 @@ describe('Testing user rights', () => {
                     .then($alert => {
                       // Gets the name of the field that alert is about.
                       const $required_field = $alert.text().split(" field").shift().trim().toLowerCase();
+
                       cy.get('input[id^="field-' + $required_field + '-"')
                         .first()
                         .click()
@@ -155,12 +152,12 @@ describe('Testing user rights', () => {
       cy.get('tbody tr').each(($el, $index, $list) => {
         // Checks if the content listing is not empty.
         if(!$el[0].classList.contains('odd')) {
-
           // Checks which content is authored by test user.
           cy.wrap($el.children('.views-field-uid'))
             .within(($cell) => {
               if ($cell[0].innerText === user.name) {
                 cy.log('Found content authored by test user.');
+
                 cy.wrap($el)
                   .within(() => {
                     cy.get('td .js-form-type-checkbox *[data-drupal-selector^="edit-node-bulk-form-"]').click();

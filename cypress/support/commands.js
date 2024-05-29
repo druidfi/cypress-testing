@@ -91,7 +91,8 @@ function stringifyOptions(options) {
 
     if (typeof options[option] === 'string') {
       output += `="${options[option]}"`;
-    } else {
+    }
+    else {
       output += `=${options[option]}`
     }
 
@@ -124,12 +125,15 @@ Cypress.Commands.add('userExists', (username) => {
 Cypress.Commands.add('loginByNameAndPass', (username, password) => {
   cy.logout();
 
-  cy.visit('/user/login');
+  cy.visit('/user/login')
+
   cy.get('#edit-name')
-    .type(username);
+    .type(username)
+
   cy.get('#edit-pass').type(password, {
     log: false,
   });
+
   cy.get('#edit-submit').click();
 });
 
@@ -159,8 +163,11 @@ Cypress.Commands.add('createUserWithRole', (username, role) => {
     .should('match', /Created a new user/gm)
     .then(function (stderr) {
       const uid = stderr.match(/Created a new user with uid ([0-9]+)/)[1]
+
       cy.log(uid);
+
       cy.drush('user:role:add', [role, username])
+
       cy.wrap({
         username,
         uid,
@@ -191,7 +198,7 @@ Cypress.Commands.add('loginByName', (username) => {
 });
 
 /**
- * Adds texts content in ckeditor.
+ * Adds text content in ckeditor.
  */
 Cypress.Commands.add("typeCkeditor", (text) => {
   cy.get('.ck-content[contenteditable=true]').then(el => {
