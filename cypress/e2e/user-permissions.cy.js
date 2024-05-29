@@ -1,6 +1,3 @@
-let test_user = 'Test02';
-let test_content = "Cha cha cha";
-
 describe('Load the front page.', () => {
   it('visit the front page.', () => {
     cy.visit('/');
@@ -110,21 +107,17 @@ describe('Testing user rights', () => {
 
             cy.get('#edit-submit')
               .click()
-
               .then(() => {
-
-                //If some fields were not filled out, alert will be shown.
-                if(cy.get('div[role="alert"]')) {
+                // Checks the alert if some required fields were missed.
+                if (cy.get('div[role="alert"]')) {
                   cy.get('div.messages__content')
                     .then($alert => {
-
                       // Gets the name of the field that alert is about.
                       const $required_field = $alert.text().split(" field").shift().trim().toLowerCase();
                       cy.get('input[id^="field-' + $required_field + '-"')
                         .first()
                         .click()
                         .wait(1000)
-
 
                       cy.fixture('content.json').then(content => {
                         // Checks if there is a cke field.
@@ -143,43 +136,49 @@ describe('Testing user rights', () => {
   })
 
   it('Content editor can delete their own content in bulk.', () => {
-    cy.loginByName(test_user);
+    // Check if user exist.
+    cy.fixture('test-user.json').then(user => {
+      cy.userExists(user.name).then(result => {
+        if (!result) {
+          cy.log('Creating new user.');
+          cy.createUserWithRole(user.name, user.role);
+          cy.loginByName(user.name);
+        }
+        else {
+          cy.log('User already exists');
+          cy.loginByName(user.name);
+        }
+      })
 
-    cy.visit(Cypress.config().baseUrl + 'admin/content');
+      cy.visit(Cypress.config().baseUrl + 'admin/content');
 
-    cy.get('tbody tr').each(($el, $index, $list) => {
-      // Checks if the content listing is not empty.
-      if(!$el[0].classList.contains('odd')) {
-        // Checks which content is authored by test user.
-        if(($el[0].lastElementChild.lastElementChild.innerHTML == test_user) && ($el[0].lastElementChild.classList.contains('views-field-uid'))) {
-          cy.wrap($el)
-            .within(() => {
-              cy.get('td .js-form-type-checkbox *[data-drupal-selector^="edit-node-bulk-form-"]').click()
-            })
-            // Delete selected content in bulk.
-            .then(() => {
-              cy.get('select#edit-action')
-                .select('node_delete_action')
+      cy.get('tbody tr').each(($el, $index, $list) => {
+        // Checks if the content listing is not empty.
+        if(!$el[0].classList.contains('odd')) {
 
-              cy.get('input#edit-submit')
-                .click()
-
-              cy.get('input#edit-submit')
-                .click()
+          // Checks which content is authored by test user.
+          cy.wrap($el.children('.views-field-uid'))
+            .within(($cell) => {
+              if ($cell[0].innerText === user.name) {
+                cy.log('Found content authored by test user.');
+                cy.wrap($el)
+                  .within(() => {
+                    cy.get('td .js-form-type-checkbox *[data-drupal-selector^="edit-node-bulk-form-"]').click();
+                  });
+              }
             })
         }
-      }
-    })
+      })
 
+        // Delete selected content in bulk.
+        .then(() => {
+          cy.get('select#edit-action')
+            .select('node_delete_action')
+          cy.get('input#edit-submit')
+            .click()
+          cy.get('input#edit-submit')
+            .click()
+        })
+    })
   })
 })
-
-
-// describe("GET /jsonapi/user/users", () => {
-//   it("gets a list of users", () => {
-//     cy.request("GET", "/jsonapi/user/user").then((response) => {
-//       expect(response.status).to.eq(200)
-//       expect(response.body.data).length.to.be.greaterThan(1)
-//     })
-//   })
-// })
