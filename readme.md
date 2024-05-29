@@ -1,14 +1,20 @@
-## Set project specific variables
-Project specific variables should be set under fixtures folder, e.g. core version, php version, test users name and content.
+# Cypress testing kit
+Cypress testing kit for Drupal projects built with npm.
 
-## Install packages
-Run the following inside test/cypress-npm:
+## Setting up
+Create a folder `tests` in your project root (if not existing already) and move cypress-testing folder there.
+
+### Variables
+Project specific variables should be set under fixtures folder, e.g. core version, php version, test user's name, role and test content.
+
+### Install packages
+Run the following inside test/cypress-testing:
 ```
 npm i
 ```
 
-## Use Cypress testing UI
-Run the following inside test/cypress-npm:
+### Run tests using Cypress UI
+Run the following inside tests/cypress-testing:
 ```
 npx cypress open
 ```
@@ -20,8 +26,8 @@ To start using user-permissions.cy.js, click it.
 
 The tests start to run.
 
-## Use headless Cypress testing
-Run the following inside test/cypress-npm:
+## Run tests using headless Cypress testing
+Run the following inside test/cypress-testing:
 ```
 npx cypress run
 ```
