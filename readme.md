@@ -27,7 +27,7 @@ To start using user-permissions.cy.js, click it.
 The tests start to run.
 
 ## Run tests using headless Cypress testing
-Run the following inside test/cypress-testing:
+Run the following inside tests/cypress-testing:
 ```
 npx cypress run
 ```
