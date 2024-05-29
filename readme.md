@@ -7,6 +7,8 @@ Create a folder `tests` in your project root (if not existing already) and move 
 ### Variables
 Project specific variables should be set under fixtures folder, e.g. core version, php version, test user's name, role and test content.
 
+Project's base url should be set in cypress.config.js. Note that the base url is required in two different places in that file: part of the module configuration and as an environment variable (drush is using this).
+
 ### Install packages
 Run the following inside test/cypress-testing:
 ```
@@ -20,7 +22,7 @@ npx cypress open
 ```
 Click E2E testing and choose a browser you want to use.
 
-The following view lists the test files available.
+The next view lists test files (specs) available.
 
 To start using user-permissions.cy.js, click it.
 
