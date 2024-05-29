@@ -1,5 +1,5 @@
 # Cypress testing kit
-Cypress testing kit for Drupal projects built with npm.
+Cypress testing kit built with npm for Drupal projects.
 
 ## Setting up
 Create a folder `tests` in your project root (if not existing already) and move cypress-testing folder there.
