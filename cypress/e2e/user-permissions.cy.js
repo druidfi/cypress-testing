@@ -48,7 +48,7 @@ describe('Testing user rights', () => {
         }
       })
     })
-      // Edit node type.
+      // Add a node.
       .then(() => {
         cy.fixture('content.json').then(content => {
           cy.visit(Cypress.config().baseUrl + 'node/add/' + content.node_type);
@@ -72,6 +72,10 @@ describe('Testing user rights', () => {
           else if ($element[0].type === 'number') {
             cy.wrap($element).type('1')
           }
+          // Checkboxes or radios
+          else if ($element[0].type === 'fieldset') {
+            cy.wrap($element).find('input').first().check()
+          }
           else if (!$element[0].type) {
             // No type typically means section for paragraph reference that requires opening an iframe modal.
             // Opens the iframe modal.
@@ -94,40 +98,41 @@ describe('Testing user rights', () => {
                   .check({ force: true })
 
                 cy.wrap($body)
-                  .find('#edit-submit')
+                  .find(Cypress.env('nodeSubmitButtonSelector'))
                   .click()
                   // Wait is needed to allow modal to close and save.
                   .wait(1000)
               })
           }
 
-            cy.get('#edit-submit')
-              .click()
-              .then(() => {
-                // Checks the alert if some required fields were missed.
-                if (cy.get('div[role="alert"]')) {
-                  cy.get('div.messages__content')
-                    .then($alert => {
-                      // Gets the name of the field that alert is about.
-                      const $required_field = $alert.text().split(" field").shift().trim().toLowerCase();
+          // Trying to save node.
+          cy.get(Cypress.env('nodeSubmitButtonSelector'))
+            .click()
+            .then(() => {
+              // Checks the alert if some required fields were missed.
+              if (cy.get(Cypress.env('drupalAlertMessagesSelector'))) {
+                cy.get('div.messages__content')
+                  .then($alert => {
+                    // Gets the name of the field that alert is about.
+                    const $required_field = $alert.text().split(" field").shift().trim().toLowerCase();
 
-                      cy.get('input[id^="field-' + $required_field + '-"')
-                        .first()
-                        .click()
-                        .wait(1000)
+                    cy.get('input[id^="field-' + $required_field + '-"')
+                      .first()
+                      .click()
+                      .wait(1000)
 
-                      cy.fixture('content.json').then(content => {
-                        // Checks if there is a cke field.
-                        if (cy.get('.ck-content[contenteditable=true]')) {
-                          cy.typeCkeditor(content.test_content)
-                        }
-                      })
-
-                      cy.get('#edit-submit')
-                        .click()
+                    cy.fixture('content.json').then(content => {
+                      // Checks if there is a cke field.
+                      if (cy.get('.ck-content[contenteditable=true]')) {
+                        cy.typeCkeditor(content.test_content)
+                      }
                     })
-                }
-              })
+
+                    cy.get(Cypress.env('nodeSubmitButtonSelector'))
+                      .click()
+                  })
+              }
+            })
         }))
       })
   })
@@ -153,7 +158,7 @@ describe('Testing user rights', () => {
         // Checks if the content listing is not empty.
         if(!$el[0].classList.contains('odd')) {
           // Checks which content is authored by test user.
-          cy.wrap($el.children('.views-field-uid'))
+          cy.wrap($el.children(Cypress.env('contentViewAuthorSelector')))
             .within(($cell) => {
               if ($cell[0].innerText === user.name) {
                 cy.log('Found content authored by test user.');
