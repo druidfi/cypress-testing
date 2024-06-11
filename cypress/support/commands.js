@@ -58,7 +58,7 @@
  * based on your local dev setup.
  */
 Cypress.Commands.add('drush', (command, args = [], options = {}) => {
-  return cy.exec(`docker compose exec app bash -c 'drush ${command} ${stringifyArguments(args)} ${stringifyOptions(options)} -y'`, {failOnNonZeroExit: false})
+  return cy.exec(`${Cypress.env('drushCommandPrepend')} 'drush ${command} ${stringifyArguments(args)} ${stringifyOptions(options)} -y'`, {failOnNonZeroExit: false})
 });
 
 /**

@@ -1,3 +1,4 @@
+# Copy these to .gitignore and delete this file
 .DS_Store
 node_modules
 cypress/screenshots
