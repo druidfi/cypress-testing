@@ -3,7 +3,7 @@
 # Update in some automation:
 # sed -i '' "s/VERSION=.*/VERSION=1.2.3/g" update.sh
 VERSION=1.0.0
-DEBUG=1
+DEBUG=0
 GITHUB=https://raw.githubusercontent.com
 REPOSITORY=druidfi/cypress-testing
 BRANCH=main
@@ -45,7 +45,7 @@ declare -a remove_files=(
 main() {
   if [[ ${DEBUG} -eq 1 ]]; then
   	rm -rf debug
-    mkdir -p debug/tests/cypress/e2e debug/tests/cypress/fixtures debug/tests/cypress/support
+    mkdir -p debug/cypress/e2e debug/cypress/fixtures debug/cypress/support
     cd debug || exit
   fi
 
