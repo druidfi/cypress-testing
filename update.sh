@@ -49,6 +49,10 @@ main() {
     cd debug || exit
   fi
 
+  mkdir tests
+  mkdir -p tests/cypress/e2e tests/cypress/fixtures tests/cypress/support
+  cd tests
+
   printf "\n\e%s%s updater (version %s)\e%s\n\n" "${YELLOW}" "${REPOSITORY}" "${VERSION}" "${NORMAL}"
 
   info "Download following files from ${REPOSITORY_URL}:"
