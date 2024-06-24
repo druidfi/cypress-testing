@@ -24,6 +24,7 @@ NORMAL="[0m"
 CYAN="[0;36m"
 
 declare -a files=(
+  ".gitignore"
   "cypress.config.default.js"
   "cypress.config.js"
   "package.json"
