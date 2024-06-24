@@ -4,6 +4,14 @@ Cypress testing kit built with npm for Drupal projects.
 
 ## Setting up
 
+Install/update these scripts with this oneliner:
+
+```console
+bash -c "$(curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/druidfi/cypress-testing/main/update.sh)"
+```
+
+Or manually:
+
 Create a folder `tests` in your project root (if not existing already) and move a content of this repo there.
 
 ### Variables
