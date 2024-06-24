@@ -4,6 +4,14 @@ Cypress testing kit built with npm for Drupal projects.
 
 ## Setting up
 
+Install/update these scripts with this oneliner:
+
+```console
+bash -c "$(curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/druidfi/cypress-testing/main/update.sh)"
+```
+
+Or manually:
+
 Create a folder `tests` in your project root (if not existing already) and move a content of this repo there.
 
 ### Variables
@@ -16,7 +24,7 @@ Project's `baseUrl` should be set in the `.env` project file, just copy a conten
 
 Run the following inside the `/test` folder:
 
-```
+```console
 npm i
 ```
 
@@ -24,7 +32,7 @@ npm i
 
 Run the following inside the `/tests` folder:
 
-```
+```console
 npx cypress open
 ```
 
@@ -40,12 +48,12 @@ The tests start to run.
 
 Run the following inside `/tests` folder:
 
-```
+```console
 npx cypress run
 ```
 
 To run a specific set of tests, specify a file name, e.g.:
 
-```
+```console
 npx cypress run --spec cypress/e2e/user-permissions.cy.js
 ```
