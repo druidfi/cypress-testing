@@ -16,7 +16,7 @@ Project's `baseUrl` should be set in the `.env` project file, just copy a conten
 
 Run the following inside the `/test` folder:
 
-```
+```console
 npm i
 ```
 
@@ -24,7 +24,7 @@ npm i
 
 Run the following inside the `/tests` folder:
 
-```
+```console
 npx cypress open
 ```
 
@@ -40,12 +40,12 @@ The tests start to run.
 
 Run the following inside `/tests` folder:
 
-```
+```console
 npx cypress run
 ```
 
 To run a specific set of tests, specify a file name, e.g.:
 
-```
+```console
 npx cypress run --spec cypress/e2e/user-permissions.cy.js
 ```

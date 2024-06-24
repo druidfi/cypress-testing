@@ -45,13 +45,12 @@ declare -a remove_files=(
 main() {
   if [[ ${DEBUG} -eq 1 ]]; then
   	rm -rf debug
-    mkdir -p debug/cypress/e2e debug/cypress/fixtures debug/cypress/support
-    cd debug || exit
+    mkdir -p debug/tests/cypress/e2e debug/tests/cypress/fixtures debug/tests/cypress/support
+    cd debug/tests || exit
+  else
+    mkdir -p tests/cypress/e2e tests/cypress/fixtures tests/cypress/support
+    cd tests || exit
   fi
-
-  mkdir tests
-  mkdir -p tests/cypress/e2e tests/cypress/fixtures tests/cypress/support
-  cd tests
 
   printf "\n\e%s%s updater (version %s)\e%s\n\n" "${YELLOW}" "${REPOSITORY}" "${VERSION}" "${NORMAL}"
 
